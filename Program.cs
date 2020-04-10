@@ -8,10 +8,10 @@ namespace benchtool_dotnetcore
 {
     class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
 
-            var loopCount = "99999";
+            var loopCount = "5";
 
             IBench bench = null;
 
