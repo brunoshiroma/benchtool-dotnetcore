@@ -1,0 +1,23 @@
+#SEE https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile.debian-arm32
+#build as "normal" amd64
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 as basebuild
+
+WORKDIR /bench
+
+# Copy csproj and restore as distinct layers
+COPY *.csproj ./
+#USE linux-arm here for arm32v7
+RUN dotnet restore -r linux-arm
+
+
+# Copy everything else and build
+COPY . ./
+#USE linux-arm here for arm32v7
+RUN dotnet publish -c Release -r linux-arm -o .
+
+#runtime specific image here for arm32v7
+FROM mcr.microsoft.com/dotnet/core/runtime:3.1-buster-slim-arm32v7 as runtime
+WORKDIR /bench
+COPY --from=basebuild /bench .
+
+ENTRYPOINT ["./benchtool-dotnetcore"]
