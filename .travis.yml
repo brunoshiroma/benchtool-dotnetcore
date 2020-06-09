@@ -25,7 +25,7 @@ jobs:
       arch: amd64
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker buildx build --platform linux/amd64 -t brunoshiroma/benchtool-dotnet:armv7-latest -f Dockerfile.arm32 --push .
+        - docker buildx build --platform linux/arm/v7 -t brunoshiroma/benchtool-dotnet:armv7-latest -f Dockerfile.arm32 --push .
         - docker buildx build --platform linux/amd64 -t brunoshiroma/benchtool-dotnet:amd64-latest --push .
         - docker buildx build --platform linux/arm64/v8 -t brunoshiroma/benchtool-dotnet:aarch64-latest --push .
         - docker manifest create brunoshiroma/benchtool-dotnet:latest brunoshiroma/benchtool-dotnet:armv7-latest brunoshiroma/benchtool-dotnet:amd64-latest brunoshiroma/benchtool-dotnet:aarch64-latest

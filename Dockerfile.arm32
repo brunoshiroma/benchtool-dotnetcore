@@ -1,6 +1,6 @@
 #SEE https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile.debian-arm32
 #build as "normal" amd64
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1 as basebuild
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1.300-buster as basebuild
 
 WORKDIR /bench
 
