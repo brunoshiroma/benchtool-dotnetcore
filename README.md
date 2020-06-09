@@ -2,7 +2,7 @@
 
 Simple benchmark, using:
  
-  * dotnet core 2.2
+  * dotnet core 3.1
 
 
 ### Example usage
@@ -13,7 +13,7 @@ dotnet benchtool-dotnetcore.dll 1 99999
 
 For the recursive bench ( Uses a loot of memory (~1GB))
 ```
-dotnet benchtool-dotnetcore.dll 1 99999
+dotnet benchtool-dotnetcore.dll 2 99999
 ```
 
 ### Params:
