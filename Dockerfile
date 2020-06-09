@@ -2,10 +2,17 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.1 as basebuild
 
 WORKDIR /bench
 
-COPY . .
+# Copy csproj and restore as distinct layers
+COPY *.csproj ./
+RUN dotnet restore
 
-FROM basebuild
+# Copy everything else and build
+COPY . ./
+RUN dotnet publish -c Release -o .
 
-RUN dotnet publish -f netcoreapp3.1 -c Release -r linux-x64 -o .
+#runtime
+FROM mcr.microsoft.com/dotnet/core/runtime:3.1 as runtime
+WORKDIR /bench
+COPY --from=basebuild /bench .
 
 ENTRYPOINT ["./benchtool-dotnetcore"]
