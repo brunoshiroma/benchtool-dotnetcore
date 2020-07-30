@@ -1,17 +1,4 @@
-FROM debian:buster-slim as basebuild
-
-RUN apt update
-RUN apt-get install -y wget
-RUN apt-get install -y libicu63
-
-FROM basebuild as sdk
-
-WORKDIR /opt/dotnet
-
-#SDK
-RUN wget https://download.visualstudio.microsoft.com/download/pr/5ee48114-19bf-4a28-89b6-37cab15ec3f2/f5d1f54ca93ceb8be7d8e37029c8e0f2/dotnet-sdk-3.1.302-linux-arm64.tar.gz -O dotnet.tar.gz
-RUN tar xvf dotnet.tar.gz
-ENV PATH="/opt/dotnet:${PATH}"
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster-arm64v8 as basebuild
 
 WORKDIR /bench
 
@@ -24,18 +11,8 @@ COPY . ./
 RUN dotnet publish -c Release -o .
 
 #runtime
-FROM basebuild as runtime
-
-WORKDIR /opt/dotnet
-
-#RUNTIME
-RUN wget https://download.visualstudio.microsoft.com/download/pr/9ad80afc-8284-499d-a65e-b94e3a16f273/1ed772df6ba063852e74c113b73497a5/dotnet-runtime-3.1.6-linux-arm64.tar.gz -O dotnet.tar.gz
-RUN tar xvf dotnet.tar.gz
-RUN rm dotnet.tar.gz
-ENV PATH="/opt/dotnet:${PATH}"
-ENV DOTNET_ROOT=/opt/dotnet
-
+FROM mcr.microsoft.com/dotnet/core/runtime:3.1-buster-slim-arm64v8 as runtime
 WORKDIR /bench
-COPY --from=sdk /bench .
+COPY --from=basebuild /bench .
 
 ENTRYPOINT ["./benchtool-dotnetcore"]

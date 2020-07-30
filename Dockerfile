@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1 as basebuild
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine as basebuild
 
 WORKDIR /bench
 
@@ -11,7 +11,7 @@ COPY . ./
 RUN dotnet publish -c Release -o .
 
 #runtime
-FROM mcr.microsoft.com/dotnet/core/runtime:3.1 as runtime
+FROM mcr.microsoft.com/dotnet/core/runtime:3.1-alpine as runtime
 WORKDIR /bench
 COPY --from=basebuild /bench .
 
