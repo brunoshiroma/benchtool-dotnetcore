@@ -10,8 +10,8 @@ jobs:
       arch: amd64
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker -t brunoshiroma/benchtool-dotnetcore:amd64-latest --push .
-        - docker -t brunoshiroma/benchtool-dotnetcore:armv7-latest -f Dockerfile.arm32 --push .
-        - docker -t brunoshiroma/benchtool-dotnetcore:aarch64-latest -f Dockerfile.aarch64 --push .
+        - docker build -t brunoshiroma/benchtool-dotnetcore:amd64-latest --push .
+        - docker build -t brunoshiroma/benchtool-dotnetcore:armv7-latest -f Dockerfile.arm32 --push .
+        - docker build -t brunoshiroma/benchtool-dotnetcore:aarch64-latest -f Dockerfile.aarch64 --push .
         - docker manifest create brunoshiroma/benchtool-dotnetcore:latest brunoshiroma/benchtool-dotnetcore:amd64-latest brunoshiroma/benchtool-dotnetcore:aarch64-latest
         - docker manifest push brunoshiroma/benchtool-dotnetcore:latest
