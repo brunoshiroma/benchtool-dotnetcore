@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine as basebuild
+FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine as basebuild
 
 WORKDIR /bench
 
@@ -8,10 +8,10 @@ RUN dotnet restore
 
 # Copy everything else and build
 COPY . ./
-RUN dotnet publish -c Release -o .
+RUN dotnet publish -c Release  --runtime linux-x64 --self-contained true -o .
 
 #runtime
-FROM mcr.microsoft.com/dotnet/core/runtime:3.1-alpine as runtime
+FROM debian:11-slim as runtime
 WORKDIR /bench
 COPY --from=basebuild /bench .
 
