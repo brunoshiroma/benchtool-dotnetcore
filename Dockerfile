@@ -16,3 +16,4 @@ WORKDIR /bench
 COPY --from=basebuild /bench .
 
 ENTRYPOINT ["./benchtool-dotnetcore"]
+
