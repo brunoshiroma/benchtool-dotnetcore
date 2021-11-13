@@ -8,7 +8,7 @@ RUN dotnet restore
 
 # Copy everything else and build
 COPY . ./
-RUN dotnet publish -c Release  --runtime linux-x64 --self-contained true -o .
+RUN dotnet publish -c Release  --os linux --self-contained true -o .
 
 #runtime
 FROM debian:11-slim as runtime
