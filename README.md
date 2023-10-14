@@ -2,8 +2,7 @@
 
 Simple benchmark, using:
  
-  * dotnet core 3.1
-
+  * dotnet 7
 
 ### Example usage
 For the loop bench
