@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine as basebuild
+FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine AS basebuild
 
 WORKDIR /bench
 
@@ -8,10 +8,10 @@ RUN dotnet restore
 
 # Copy everything else and build
 COPY . ./
-RUN dotnet publish -c Release --runtime linux-musl-x64 --self-contained true -o .
+RUN dotnet publish -c Release --self-contained true -o .
 
 #runtime
-FROM alpine:latest as runtime
+FROM alpine:latest AS runtime
 
 RUN apk add --no-cache libstdc++
 
